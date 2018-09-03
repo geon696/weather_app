@@ -1,0 +1,126 @@
+/*autocomplete*/
+.bs-example {
+	font-family: sans-serif;
+	position: relative;
+	margin: 100px;
+}
+.typeahead, .tt-query, .tt-hint {
+	border: 2px solid #CCCCCC;
+	border-radius: 8px;
+	height: 30px;
+	outline: medium none;
+	padding: 14px 12px;
+	width: 222px;
+}
+.typeahead {
+	background-color: #FFFFFF;
+}
+.typeahead:focus {
+	border: 2px solid #0069d9;
+}
+.tt-query {
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.tt-hint {
+	color: #999999;
+}
+.tt-menu {
+	background-color: #FFFFFF;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	padding: 8px 0;
+	width: 222px;
+}
+.tt-suggestion {
+	padding: 3px 10px;
+}
+.tt-suggestion:hover {
+	cursor: pointer;
+	background-color: #0069d9;
+	color: #FFFFFF;
+}
+.tt-suggestion p {
+	margin: 0;
+}
+/*end*/
+
+/*base.html.twig*/
+/*body,html{
+    height: 100%;
+    margin: 0;
+    background-image: url('{{asset('/images/weather.jpg')}}');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: auto;
+}*/
+
+body {
+	background-color: #4F805D;
+}
+
+
+/*end*/
+/*index.html.twig in weather template*/
+
+.jumbotron-container {
+	margin-top:15px;
+}
+.form-inline input[type='submit'], .form-inline input[type='text']{
+	margin-left: 10px;
+}
+.form {
+	background-color: #ccc;
+	border-radius: 5px;
+	padding: 5px;
+	margin-top:15px;
+}
+
+/*end*/
+
+
+
+/*index.html.twig in weather-result template*/
+
+.temp{
+	margin-top: 15px;
+	padding: 15px;
+	width: 100%;
+	background-color: #ccc;
+	border-radius: 5px;
+}
+
+.tab-content{
+	margin-top: 15px;
+}
+
+#map{
+	margin: 15px 0;
+}
+.temps {
+	float:left;
+	margin: 10px 0;
+	border-bottom: 1px solid #dee2e6;
+	background-color: #ccc;
+	border-radius: 5px;
+}
+.date-link{
+	text-decoration: none;
+	pointer-events: none;
+}
+.alert {
+	margin: 15px;
+}
+.map iframe{
+	border-radius: 5px;
+}
+
+#nav-tab .nav-item {
+	background-color: #fff;
+}
+
+#nav-tab .nav-item.active {
+	background-color: #ccc;
+}
+/*end

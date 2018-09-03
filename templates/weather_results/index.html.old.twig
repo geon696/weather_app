@@ -1,0 +1,415 @@
+{% extends '/weather/index.html.twig' %}
+
+{% block title %}Wheather - Results{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+	    .temp{
+	    	margin-top: 15px;
+	    	padding: 15px;
+	    	width: 100%;
+	    	background-color: #ccc;
+	    	border-radius: 5px;
+	    }
+	    #map{
+	    	margin: 15px 0;
+	    }
+	    .temps {
+	    	float:left;
+	    	margin: 10px 0;
+	    	border-bottom: 1px solid #dee2e6;
+	    	background-color: #ccc;
+	    	border-radius: 5px;
+	    }
+	    .date-link{
+	    	text-decoration: none;
+	    	pointer-events: none;
+	    }
+	    .alert {
+	    	margin: 15px;
+	    }
+	    .map iframe{
+	    	border-radius: 5px;
+	    }
+
+    </style>
+{% endblock %}
+{% block info %}
+	{% set date = geoip.time_zone.current_time | split(' ') %}
+	{% set date_day = date[0] | split('-') %}
+    <span class="navbar-text"> IP : {{geoip.ip}} - Place : {{geoip.time_zone.name}} - Date : {{date[0]}}</span>
+{% endblock %}
+{% block weather %}
+
+	<div class="row">
+		<div class="col-lg-12" role="tab-list">
+	    	<nav>
+			  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+			    <a class="nav-item nav-link active" id="nav-day-tab" data-toggle="tab" href="#nav-day" role="tab" aria-controls="nav-day" aria-selected="true">Daily Results</a>
+			    <a class="nav-item nav-link" id="nav-week-tab" data-toggle="tab" href="#nav-week" role="tab" aria-controls="nav-week" aria-selected="false">Weekly Results</a>
+			   <!--  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a> -->
+			   <!-- <a href="#" class="nav-item nav-link date-link" id="nav-date-tab" role="tab" style="text-decoration:none;"><span>{{weather.dt|date}}</span></a> -->
+			  </div>
+			</nav>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			
+			<div class="tab-content" id="nav-tabContent">
+				<div class="tab-pane fade show active" id="nav-day" role="tabpanel" aria-labelledby="nav-day-tab">
+
+					<div class="container temp">
+						<div class="row">
+							<div class="col">
+								<div class="card" style="width: 18rem;">
+									<div class="card-body">
+										<h5 class="card-title">
+											{{weather.name}} <img src="http://openweathermap.org/img/w/{{weather.weather[0].icon}}.png" alt="">
+										</h5>
+
+										<h6 class="card-subtitle mb-2 text-muted">
+											{{weather.dt | date('H:m')}}
+										</h6>
+										<p>
+											Its expected to have a <span class="badge badge-secondary" style="font-size:15px;">{{weather.weather[0].description}}</span>
+										</p>
+										<p>
+											While the temperature is averaged at : <span class="badge badge-secondary" style="font-size:15px;"><!--  <i class="far fa-sun"></i> -->
+											{{weather.main.temp|default('')}} &#8451;</span> 
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="nav-week" role="tabpanel" aria-labelledby="nav-week-tab">
+					<div class="temp">
+						<div class="row">
+							<div class="col-lg-12" role="tab-list">
+						    	<nav>
+								  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+								    <a class="nav-item nav-link active" id="nav-day-Mon" data-toggle="tab" href="#day-Mon" role="tab" aria-controls="nav-day-Mon" aria-selected="true">Monday</a>
+								    <a class="nav-item nav-link" id="nav-day-Tue" data-toggle="tab" href="#day-Tue" role="tab" aria-controls="nav-day-Tue" aria-selected="false">Tuesday</a>
+								    <a class="nav-item nav-link" id="nav-day-Wed" data-toggle="tab" href="#day-Wed" role="tab" aria-controls="nav-day-Wed" aria-selected="false">Wednesday</a>
+								    <a class="nav-item nav-link" id="nav-day-Thu" data-toggle="tab" href="#day-Thu" role="tab" aria-controls="nav-day-Thu" aria-selected="false">Thursday</a>
+								    <a class="nav-item nav-link" id="nav-day-Fri" data-toggle="tab" href="#day-Fri" role="tab" aria-controls="nav-day-Fri" aria-selected="false">Friday</a>
+								    <a class="nav-item nav-link" id="nav-day-Sat" data-toggle="tab" href="#day-Sat" role="tab" aria-controls="nav-day-Sat" aria-selected="false">Saturday</a>
+								    <a class="nav-item nav-link" id="nav-day-Sun" data-toggle="tab" href="#day-Sun" role="tab" aria-controls="nav-day-Sun" aria-selected="false">Sunday</a>
+								   
+								  </div>
+								</nav>
+							</div>
+						</div>
+						<div class="row">
+							
+							
+						
+							<div class="tab-content" id="nav-tabContent">
+								<div class="tab-pane fade show active" id="day-Mon" role="tabpanel" aria-labelledby="day-Mon-tab">
+									{% if weekdays.Mon is not empty %}
+										<div class="container">
+											<div class="row">
+												{% for list in weekdays.Mon %}
+													{% set var = list.dt_txt|split(' ') %}
+												    {% set day = var[0]|split('-') %}
+														<div class="col-6">
+															<div class="card">
+																<div class="card-body">
+															    	<h5 class="card-title">
+															    		{{list.dt|date('D')}}-{{day[2]}}-{{day[0]}}  
+															    		<img src="http://openweathermap.org/img/w/{{list.weather[0].icon}}.png" alt="">
+															    		
+															    	</h5>
+															    	<h6 class="card-subtitle mb-2 text-muted">
+															    		{{list.dt|date('H:m')}}
+															    	</h6>
+															    	<p> 
+															    		temperature is expected to be at <span class="badge badge-secondary" style="font-size:15px;">{{list.main.temp}} &#8451;</span> with a <span class="badge badge-secondary" style="font-size:15px;">{{list.weather[0].description}}</span>
+															    	</p>
+															    	
+															    </div>
+															</div>
+														</div>
+												{% endfor %}
+											</div>
+										</div>
+										{% else %}
+										    <div class="container">
+										    	<div class="row">
+										    		<div class="col">
+														<div class="alert alert-warning" role="alert">No results found try again later</div>
+										    		</div>
+										    	</div>
+										    </div>
+										{% endif %}
+								</div>
+								
+								<div class="tab-pane fade" id="day-Tue" role="tabpanel" aria-labelledby="day-Tue-tab">
+									{% if weekdays.Tue is not empty %}
+										<div class="container">
+											<div class="row">
+												{% for list in weekdays.Tue %}
+			
+													{% set var = list.dt_txt|split(' ') %}
+													{% set day = var[0]|split('-') %}
+													<div class="col-6">
+														<div class="card">
+															<div class="card-body">
+														    	<h5 class="card-title">
+														    		{{list.dt|date('D')}}-{{day[2]}}-{{day[0]}}
+														    		<img src="http://openweathermap.org/img/w/{{list.weather[0].icon}}.png" alt="">  
+														    		
+														    	</h5>
+														    	<h6 class="card-subtitle mb-2 text-muted">
+														    		{{list.dt|date('H:m')}}
+														    	</h6>
+														    	<p> 
+														    		temperature is expected to be at <span class="badge badge-secondary" style="font-size:15px;">{{list.main.temp}} &#8451;</span> with a <span class="badge badge-secondary" style="font-size:15px;">{{list.weather[0].description}}</span>
+														    	</p>
+														    	
+														    </div>
+														</div>
+													</div>
+													
+												{% endfor %}
+
+											</div>
+										</div>
+
+											
+									{% else %}
+									    <div class="container">
+										    	<div class="row">
+										    		<div class="col">
+														<div class="alert alert-warning" role="alert">No results found try again later</div>
+										    		</div>
+										    	</div>
+										    </div>
+									{% endif %}								
+								</div>
+									
+								<div class="tab-pane fade" id="day-Wed" role="tabpanel" aria-labelledby="day-Wed-tab">
+									{% if weekdays.Wed is not empty %}
+										<div class="container">
+											<div class="row">
+												{% for list in weekdays.Wed %}
+
+													{% set var = list.dt_txt|split(' ') %}
+													{% set day = var[0]|split('-') %}
+													
+														<div class="col-6">
+															<div class="card">
+																<div class="card-body">
+															    	<h5 class="card-title">
+															    		{{list.dt|date('D')}}-{{day[2]}}-{{day[0]}} 
+															    		<img src="http://openweathermap.org/img/w/{{list.weather[0].icon}}.png" alt=""> 
+															    		
+															    	</h5>
+															    	<h6 class="card-subtitle mb-2 text-muted">
+															    		{{list.dt|date('H:m')}}
+															    	</h6>
+															    	<p> 
+															    		temperature is expected to be at <span class="badge badge-secondary" style="font-size:15px;">{{list.main.temp}} &#8451;</span> with a <span class="badge badge-secondary" style="font-size:15px;">{{list.weather[0].description}}</span>
+															    	</p>
+															    	
+															    </div>
+															</div>
+														</div>
+													
+												{% endfor %}
+											</div>
+										</div>	
+									{% else %}
+									    <div class="container">
+									    	<div class="row">
+									    		<div class="col">
+													<div class="alert alert-warning" role="alert">No results found try again later</div>
+									    		</div>
+									    	</div>
+									    </div>
+									{% endif %}
+								</div>
+
+								
+								<div class="tab-pane fade" id="day-Thu" role="tabpanel" aria-labelledby="day-Thu-tab">
+									{% if weekdays.Thu is not empty %}
+										<div class="container">
+									    	<div class="row">
+												{% for list in weekdays.Thu %}
+
+													{% set var = list.dt_txt|split(' ') %}
+													{% set day = var[0]|split('-') %}
+													
+														<div class="col-6">
+															<div class="card">
+																<div class="card-body">
+															    	<h5 class="card-title">
+															    		{{list.dt|date('D')}}-{{day[2]}}-{{day[0]}}  
+															    		<img src="http://openweathermap.org/img/w/{{list.weather[0].icon}}.png" alt="">
+															    		
+															    	</h5>
+															    	<h6 class="card-subtitle mb-2 text-muted">
+															    		{{list.dt|date('H:m')}}
+															    	</h6>
+															    	<p> 
+															    		temperature is expected to be at <span class="badge badge-secondary" style="font-size:15px;">{{list.main.temp}} &#8451;</span> with a <span class="badge badge-secondary" style="font-size:15px;">{{list.weather[0].description}}</span>
+															    	</p>
+															    	
+															    </div>
+															</div>
+														</div>
+													
+												{% endfor %}
+											</div>
+										</div>
+									{% else %}
+									    <div class="alert alert-warning" role="alert">No results found try again later</div>
+									{% endif %}
+								</div>
+
+									<div class="tab-pane fade" id="day-Fri" role="tabpanel" aria-labelledby="day-Fri-tab">
+										{% if weekdays.Fri is not empty %}
+											<div class="container">
+												<div class="row">
+													{% for list in weekdays.Fri %}
+
+														{% set var = list.dt_txt|split(' ') %}
+														{% set day = var[0]|split('-') %}
+														
+														<div class="col-6">
+															<div class="card">
+																<div class="card-body">
+															    	<h5 class="card-title">
+															    		{{list.dt|date('D')}}-{{day[2]}}-{{day[0]}}  
+															    		<img src="http://openweathermap.org/img/w/{{list.weather[0].icon}}.png" alt="">
+															    		
+															    	</h5>
+															    	<h6 class="card-subtitle mb-2 text-muted">
+															    		{{list.dt|date('H:m')}}
+															    	</h6>
+															    	<p> 
+															    		temperature is expected to be at <span class="badge badge-secondary" style="font-size:15px;">{{list.main.temp}} &#8451;</span> with a <span class="badge badge-secondary" style="font-size:15px;">{{list.weather[0].description}}</span>
+															    	</p>
+															    	
+															    </div>
+															</div>
+														</div>
+														
+													{% endfor %}
+												</div>
+											</div>
+										{% else %}
+											<div class="container">
+												<div class="row">
+													<div class="col">
+														<div class="alert alert-warning" role="alert">No results found try again later</div>
+													</div>
+												</div>
+											</div>
+										{% endif %}
+									</div>
+
+									<div class="tab-pane fade" id="day-Sat" role="tabpanel" aria-labelledby="day-Sat-tab">
+										{% if weekdays.Sat is not empty %}
+											<div class="container">
+												<div class="row">
+													{% for list in weekdays.Sat %}
+
+														{% set var = list.dt_txt|split(' ') %}
+														{% set day = var[0]|split('-') %}
+														
+															<div class="col-6">
+																<div class="card">
+																	<div class="card-body">
+																    	<h5 class="card-title">
+																    		{{list.dt|date('D')}}-{{day[2]}}-{{day[0]}} 
+																    		<img src="http://openweathermap.org/img/w/{{list.weather[0].icon}}.png" alt=""> 
+																    		
+																    	</h5>
+																    	<h6 class="card-subtitle mb-2 text-muted">
+																    		{{list.dt|date('H:m')}}
+																    	</h6>
+																    	<p> 
+																    		temperature is expected to be at <span class="badge badge-secondary" style="font-size:15px;">{{list.main.temp}} &#8451;</span> with a <span class="badge badge-secondary" style="font-size:15px;">{{list.weather[0].description}}</span>
+																    	</p>
+																    	
+																    </div>
+																</div>
+															</div>
+														
+													{% endfor %}
+												</div>
+											</div>
+										{% else %}
+										    <div class="container">
+										    	<div class="row">
+										    		<div class="col">
+														<div class="alert alert-warning" role="alert">No results found try again later</div>
+										    		</div>
+										    	</div>
+										    </div>
+										{% endif %}
+									</div>
+
+								
+									<div class="tab-pane fade" id="day-Sun" role="tabpanel" aria-labelledby="day-Sun-tab">
+										{% if weekdays.Sun is not empty %}
+											<div class="container">
+												<div class="row">
+													{% for list in weekdays.Sun %}
+
+														{% set var = list.dt_txt|split(' ') %}
+														{% set day = var[0]|split('-') %}
+														
+															<div class="col-6">
+																<div class="card">
+																	<div class="card-body">
+																    	<h5 class="card-title">
+																    		{{list.dt|date('D')}}-{{day[2]}}-{{day[0]}} 
+																    		<img src="http://openweathermap.org/img/w/{{list.weather[0].icon}}.png" alt=""> 
+																    		
+																    	</h5>
+																    	<h6 class="card-subtitle mb-2 text-muted">
+																    		{{list.dt|date('H:m')}}
+																    	</h6>
+																    	<p> 
+																    		temperature is expected to be at <span class="badge badge-secondary" style="font-size:15px;">{{list.main.temp}} &#8451;</span> with a <span class="badge badge-secondary" style="font-size:15px;">{{list.weather[0].description}}</span>
+																    	</p>
+																    </div>
+																</div>
+															</div>
+														
+													{% endfor %}
+												</div>
+											</div>
+										{% else %}
+										    <div class="container">
+										    	<div class="row">
+										    		<div class="col">
+														<div class="alert alert-warning" role="alert">No results found try again later</div>
+										    		</div>
+										    	</div>
+										    </div>
+										{% endif %}
+								</div>
+							</div> <!-- div.tab-content -->
+						</div> <!-- div.row of tab-content -->
+					</div>
+				</div>
+				<!-- <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div> -->
+			</div>
+		</div>
+	</div>
+
+	<hr>
+	<div class="row">
+		<div id="map" class="col-md-12">
+			  <iframe src="https://maps.google.com/maps?q={{weather.coord.lat|default('')}},{{weather.coord.lon|default('')}}&hl=en&z=14&amp;output=embed" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
+		</div>
+	</div>
+
+{% endblock %}
