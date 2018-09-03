@@ -2,5 +2,5 @@
 
 An app for weather foretelling
 
-It uses openweather api and ipgeolocation api to determine your country 
-and to give you the weather foretelling.
+It uses ipgeolocation api to determine roughly your country and public IP and 
+then it uses openweather api in order to fetch the desired location's weather foretelling.
