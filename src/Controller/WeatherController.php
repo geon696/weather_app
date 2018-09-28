@@ -6,22 +6,45 @@ use App\Form\WeatherType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Finder\Finder;
+use App\Service\IpApi as IpApiClient;
+use App\Service\newsApi as NewsApiClient;
 
 class WeatherController extends Controller
 {
     /**
      * @Route("/", name="weather")
      */
-    public function index(Request $request)
+    public function index(Request $request, IpApiClient $ipClient, NewsApiClient $newsClient)
     {
     	
         $form = $this->createForm(WeatherType::class);
+        $finder = new Finder();
+        $finder->files()->in(__DIR__.'/../../public/json');
+        $geoip = [];
+        $news = [];
 
+        $news = $newsClient->getNews();
+
+        // return the news that i get and then show them on the template
+
+        foreach ($finder as $file) {
+            $jsonContent = $file->getContents();
+        }
         
+        $contents = json_decode($jsonContent,true);
+
+        $geoip = json_decode($ipClient->getGeolocation(),true);
+
+        $keys = array_keys($contents);
+        $keys = json_encode($keys);
 
         return $this->render('weather/index.html.twig', [
             'controller_name' => 'WeatherController',
-            'weatherForm' => $form->createView()
+            'file'=>$jsonContent,
+            'countries'=>$keys,
+            'weatherForm' => $form->createView(),
+            'geoip' => $geoip
         ]);
     }
 }

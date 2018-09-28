@@ -28,17 +28,17 @@ class weatherApi
         $this->forecastClient = new HttpClient($forecastDefault);
 	}
 
-	public function weatherSearch($search){
+	public function weatherSearch($search, $code){
 
-		$parameters = '?q='.$search['city'].'&units=metric&APPID='.$this->wkey;
+		$parameters = '?q='.$search['city'].','.$code.'&units=metric&APPID='.$this->wkey;
 		$response = $this->weatherClient->request('GET',$parameters);
 
 		return $response->getBody()->getContents();
 	}
 
-	public function forecastSearch($search){
+	public function forecastSearch($search, $code){
 
-		$parameters = '?q='.$search['city'].'&units=metric&APPID='.$this->wkey;
+		$parameters = '?q='.$search['city'].','.$code.'&units=metric&APPID='.$this->wkey;
 		$response = $this->forecastClient->request('GET',$parameters);
 
 		return $response->getBody()->getContents();

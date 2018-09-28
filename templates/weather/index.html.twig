@@ -19,11 +19,22 @@
 
     </style>
 {% endblock stylesheets %}
+
+{% block info %}
+	{#{% set date = geoip.time_zone.current_time | split(' ') %}
+	{% set date_day = date[0] | split('-') %}
+	{% set generalPlace = geoip.time_zone.name | split('/') %}
+	{% set place = generalPlace[1] %}
+	{{dump(place)}}
+    <span class="navbar-text"> IP : {{geoip.ip}} - Place : {{geoip.time_zone.name}} - Date : {{date[0]}}</span> #}
+{% endblock %}
+
 {% block body %}
 
      
 
 	<div class="container">
+		
 		
 
 		<div class="row">
@@ -37,8 +48,17 @@
 					        <div class="typeahead__field">
 					            <div class="typeahead__query">
 					                <!-- <input class="js-typeahead-country_v1" name="country_v1[query]" placeholder="Search" autocomplete="off" type="search"> -->
-					                <div class="form-wrapper"><label for="weather_city">{{form_label(weatherForm.city)}}</label>
-									{{form_widget(weatherForm.city)}}</div>
+					                <div class="form-wrapper">
+
+					                	<label for="weather_country">{{form_label(weatherForm.country)}}</label>
+										{{form_widget(weatherForm.country,{
+					                	'attr':{'data-countries':countries}})}}
+					                	<label for="weather_city">{{form_label(weatherForm.city)}}</label>
+										{{form_widget(weatherForm.city,{
+											'attr': {
+												'data-cities': file
+										}})}}
+									</div>
 									<input type="submit" value="submit" class="btn btn-primary submit">
 					            </div>
 					        </div>
@@ -76,7 +96,6 @@
 
 {% block javascripts %}
 	{{parent()}}
-
-	<script type="text/javascript" src="{{asset('/js/autocomplete.js')}}"></script>
+	<script type="text/javascript" src="{{asset('/js/autocomplete.js')}}" ></script>
 
 {% endblock javascripts %}

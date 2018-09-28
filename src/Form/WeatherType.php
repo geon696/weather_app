@@ -22,11 +22,18 @@ class WeatherType extends AbstractType
         $builder->setAction($this->router->generate('results'));
 
         $builder
+            ->add('country', TextType::Class,[
+                'attr'=>[
+                    'class'=>'country typeahead',
+                    'autocomplete'=>'off',
+                    'placeholder'=>'Insert Country Here'
+                ]
+            ])
             ->add('city',TextType::class,[
                 'attr'=>[
                     'class'=>'city typeahead',
                     'autocomplete'=>'off',
-                    'placeholder'=>'Inser City Here'
+                    'placeholder'=>'Insert City Here'
                 ]
             ])
         ;

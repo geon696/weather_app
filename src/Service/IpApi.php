@@ -20,7 +20,7 @@ class IpApi
 
 
 	public function getGeolocation(){
-		$parameters = '?fields=time_zone&apiKey='.$this->geoipKey;
+		$parameters = '?fields=time_zone,country_code2&apiKey='.$this->geoipKey;
 		$response = $this->geoipClient->request('GET',$parameters);
 
 		return $response->getBody()->getContents();

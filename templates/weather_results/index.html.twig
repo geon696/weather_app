@@ -6,11 +6,7 @@
     {{ parent() }}
     <link rel="stylesheet" href="{{asset('/style.css')}}">
 {% endblock %}
-{% block info %}
-	{% set date = geoip.time_zone.current_time | split(' ') %}
-	{% set date_day = date[0] | split('-') %}
-    <span class="navbar-text"> IP : {{geoip.ip}} - Place : {{geoip.time_zone.name}} - Date : {{date[0]}}</span>
-{% endblock %}
+
 {% block weather %}
 
 	<div class="row">
@@ -140,4 +136,8 @@
 		</div>
 	</div>
 
+{% endblock %}
+
+{% block javascripts %}
+	{{parent()}}
 {% endblock %}
