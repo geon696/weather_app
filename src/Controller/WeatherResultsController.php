@@ -10,13 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class WeatherResultsController extends Controller
 {
     /**
      * @Route("/results", name="results")
      */
-    public function index(Request $request, WeatherClient $client, IpApiClient $ipClient,countriesCodesClient $countryCodeClient)
+    public function index(Request $request, WeatherClient $client, IpApiClient $ipClient,countriesCodesClient $countryCodeClient,  SessionInterface $session)
     {
 		$dailyWeather = [];
 		$forecastWeather = [];
@@ -39,7 +40,7 @@ class WeatherResultsController extends Controller
         $keys = json_encode($keys);
 
         if($form->isSubmitted()){
-
+            $news = $session->get('news');
         	$data = $form->getData();
             $geoip = json_decode($ipClient->getGeolocation(),true);
 
@@ -60,7 +61,8 @@ class WeatherResultsController extends Controller
             'weekdays' => $weekdays,
             'geoip' => $geoip,
             'file'=>$jsonContent,
-            'countries'=>$keys
+            'countries'=>$keys,
+            'news' => $news
         ]);
     }
 }

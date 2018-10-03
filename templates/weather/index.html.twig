@@ -3,39 +3,6 @@
 {% block title %}Wheather{% endblock title %}
 {% block stylesheets %}
     {{ parent() }}
-    <style>
-		.jumbotron-container {
-			margin-top:15px;
-		}
-		.form-inline input[type='submit'], .form-inline input[type='text']{
-			margin-left: 10px;
-		}
-		.form {
-			background-color: #ccc;
-			border-radius: 5px;
-			padding: 5px;
-			margin-top:15px;
-		}
-
-		.news {
-			margin: 0 auto;
-		}
-
-		.card-img-top {
-			max-height: 350px;
-    		overflow:hidden;
-		}
-		.lead {
-			margin-bottom: 10px;
-		}
-		.news-section {
-			margin-bottom: 10px;
-			color: #fff;
-			/*background-color: #5a6268;*/
-			border-color: #545b62;
-			text-align: center;
-		}
-    </style>
 {% endblock stylesheets %}
 
 {% block info %}
@@ -59,7 +26,7 @@
 			<div class="col-lg-12">
 				{{form_start(weatherForm,{'attr': {'class': 'form'}})}}
 					<div class="col-lg-12">
-						<legend>{{form_label(weatherForm)}}</legend>
+						<legend>Search for the {{form_label(weatherForm)}} Here</legend>
 					</div>
 					<div class="col-lg-12">
 						<div class="typeahead__container">
@@ -101,7 +68,7 @@
 				    <h1>Latest TechCrunch News</h1>
 				</section>
 			</div>
-			<div class="col-md-8 news">
+			<div class="col-md-10 news">
 				<div id="blogCarousel" class="carousel slide" data-ride="carousel">
 					<div class="col-xs-12 text-md-right lead">
 		                <a class="btn btn-secondary prev" href="" title="Previous Article"><i class="fa fa-lg fa-chevron-left"></i> Previous</a>
@@ -119,9 +86,8 @@
 									  <img class="card-img-top" src="{{article.urlToImage}}" alt="article_image">
 									  <div class="card-body">
 									    <h5 class="card-title">{{article.title}}</h5>
-									    <h6 class="card-subtitle mb-2 text-muted">Author: {{article.author}}</h6>
+									    <h6 class="card-subtitle mb-2 text-muted">Author: {{article.author}} - Published At: {{article.publishedAt}}</h6>
 									    <p>{{article.description}}</p>
-									    <h6 class="card-subtitle mb-2 text-muted">Published At: {{article.publishedAt}}</h6>
 									    <a href="{{article.url}}" class="btn btn-primary" target="_blnak">Read Article</a>
 									  </div>
 									</div>
@@ -132,7 +98,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-xl-12 jumbotron-container">
 				<div class="jumbotron">
 					<h1 class="display-4">
@@ -144,14 +110,13 @@
 					<a href="https://openweathermap.org/" class="btn btn-primary btn-lg" target="_blnak">Learn more</a>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 {% endblock body %}
 
 {% block javascripts %}
 	{{parent()}}
 	<script type="text/javascript" src="{{asset('/js/autocomplete.js')}}" ></script>
-	<script type="text/javascript" src="{{asset('js/OwlCarousel/dist/owl.carousel.js')}}"></script>
 
 	<script>
         $(document).ready(function(){

@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Service\IpApi as IpApiClient;
 use App\Service\newsApi as NewsApiClient;
 
@@ -15,7 +16,7 @@ class WeatherController extends Controller
     /**
      * @Route("/", name="weather")
      */
-    public function index(Request $request, IpApiClient $ipClient, NewsApiClient $newsClient)
+    public function index(Request $request, IpApiClient $ipClient, NewsApiClient $newsClient, SessionInterface $session)
     {
     	
         $form = $this->createForm(WeatherType::class);
@@ -26,6 +27,7 @@ class WeatherController extends Controller
 
         $news = $newsClient->getNews();
         $news = json_decode($news,true);
+        $session->set('news',$news);
         // return the news that i get and then show them on the template
 
         foreach ($finder as $file) {
@@ -43,7 +45,7 @@ class WeatherController extends Controller
             'countries'=>$keys,
             'weatherForm' => $form->createView(),
             'geoip' => $geoip,
-            'news' => $news
+            'news' => $session->get('news')
         ]);
     }
 }
