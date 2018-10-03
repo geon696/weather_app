@@ -17,6 +17,15 @@
 			margin-top:15px;
 		}
 
+		.articles {
+			float: left;
+			margin: 0;
+		}
+
+		.not-show{
+			display: none;
+		}
+
     </style>
 {% endblock stylesheets %}
 
@@ -77,6 +86,33 @@
 		{% block weather %}
 		    
 		{% endblock weather %}
+
+		
+
+		<div class="row">
+			{% set i = 0 %}
+			<div class="owl-carousel owl-theme">
+			{% for key,article in news.articles %}
+				<div class="col-xl-6 ">
+				{#{{dump(key)}}
+			    {{dump(article)}}#}
+				    <div class="articles item">
+					    <div class="card">
+						  <img class="card-img-top" src="{{article.urlToImage}}" alt="article_image">
+						  <div class="card-body">
+						    <h5 class="card-title">{{article.title}}</h5>
+						    <h6 class="card-subtitle mb-2 text-muted">Author: {{article.author}}</h6>
+						    <p>{{article.description}}</p>
+						    <h6 class="card-subtitle mb-2 text-muted">Published At: {{article.publishedAt}}</h6>
+						    <a href="{{article.url}}" class="btn btn-primary" target="_blnak">Read Article</a>
+						  </div>
+						</div>
+					</div>
+				</div>
+				{% set i = i+1 %}
+			{% endfor %}
+			</div>
+		</div>
 		
 		<div class="row">
 			<div class="col-xl-12 jumbotron-container">
@@ -97,5 +133,11 @@
 {% block javascripts %}
 	{{parent()}}
 	<script type="text/javascript" src="{{asset('/js/autocomplete.js')}}" ></script>
-
+	<script type="text/javascript" src="{{asset('js/OwlCarousel/dist/owl.carousel.js')}}"></script>
+ 
+	<script type="text/javascript">
+		$(document).ready(fucntion(){
+			console.log($('.owl-carousel'));
+		});
+	</script>
 {% endblock javascripts %}

@@ -25,7 +25,7 @@ class WeatherController extends Controller
         $news = [];
 
         $news = $newsClient->getNews();
-
+        $news = json_decode($news,true);
         // return the news that i get and then show them on the template
 
         foreach ($finder as $file) {
@@ -33,9 +33,7 @@ class WeatherController extends Controller
         }
         
         $contents = json_decode($jsonContent,true);
-
         $geoip = json_decode($ipClient->getGeolocation(),true);
-
         $keys = array_keys($contents);
         $keys = json_encode($keys);
 
@@ -44,7 +42,8 @@ class WeatherController extends Controller
             'file'=>$jsonContent,
             'countries'=>$keys,
             'weatherForm' => $form->createView(),
-            'geoip' => $geoip
+            'geoip' => $geoip,
+            'news' => $news
         ]);
     }
 }
