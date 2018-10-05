@@ -28,6 +28,7 @@ class WeatherController extends Controller
         $news = $newsClient->getNews();
         $news = json_decode($news,true);
         $session->set('news',$news);
+
         // return the news that i get and then show them on the template
 
         foreach ($finder as $file) {
@@ -39,12 +40,16 @@ class WeatherController extends Controller
         $keys = array_keys($contents);
         $keys = json_encode($keys);
 
+        $session->set('contents',$jsonContent);
+        $session->set('geop',$geoip);
+        $session->set('keys',$keys);
+
         return $this->render('weather/index.html.twig', [
             'controller_name' => 'WeatherController',
-            'file'=>$jsonContent,
-            'countries'=>$keys,
+            'file'=>$session->get('contents'),
+            'countries'=>$session->get('keys'),
             'weatherForm' => $form->createView(),
-            'geoip' => $geoip,
+            'geoip' => $session->get('geoip'),
             'news' => $session->get('news')
         ]);
     }
