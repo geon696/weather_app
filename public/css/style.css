@@ -43,3 +43,25 @@
 /*weather results controller template*/
 	/*for now there is no css in here*/
 /*end of weather results controller template */
+
+
+/*footer*/
+
+.footer {
+	margin-top: 10px;
+	width: 100%;
+	background-color: #5a6268;
+	text-align: center;
+	color: #fff;
+	line-height: 4em;
+	font-size: 1.3em;
+}
+
+.footer a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.footer a:hover {
+	color: #000;
+}
