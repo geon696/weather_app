@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Form\WeatherType;
+use App\Service\IpApi as IpApiClient;
+use App\Service\newsApi as NewsApiClient;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use App\Service\IpApi as IpApiClient;
-use App\Service\newsApi as NewsApiClient;
+
 
 class WeatherController extends Controller
 {
@@ -29,8 +30,6 @@ class WeatherController extends Controller
         $news = json_decode($news,true);
         $session->set('news',$news);
 
-        // return the news that i get and then show them on the template
-
         foreach ($finder as $file) {
             $jsonContent = $file->getContents();
         }
@@ -45,10 +44,9 @@ class WeatherController extends Controller
         $session->set('keys',$keys);
 
         return $this->render('weather/index.html.twig', [
-            'controller_name' => 'WeatherController',
+            'weatherForm' => $form->createView(),
             'file'=>$session->get('contents'),
             'countries'=>$session->get('keys'),
-            'weatherForm' => $form->createView(),
             'geoip' => $session->get('geoip'),
             'news' => $session->get('news')
         ]);

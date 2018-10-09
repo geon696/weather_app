@@ -8,7 +8,6 @@ use App\Service\countriesCodes as countriesCodesClient;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class WeatherResultsController extends Controller
@@ -16,7 +15,7 @@ class WeatherResultsController extends Controller
     /**
      * @Route("/results", name="results")
      */
-    public function index(Request $request, WeatherClient $client,countriesCodesClient $countryCodeClient,  SessionInterface $session)
+    public function index(Request $request, WeatherClient $weatherClient,countriesCodesClient $countryCodeClient,  SessionInterface $session)
     {
 		$dailyWeather = [];
 		$forecastWeather = [];
@@ -27,12 +26,11 @@ class WeatherResultsController extends Controller
     	$form->handleRequest($request);
 
         if($form->isSubmitted()){
-            $news = $session->get('news');
         	$data = $form->getData();
             $code = json_decode($countryCodeClient->getCountryCode($data['country']));
             $countryCode = strtolower($code[0]->alpha2Code);
-        	$dailyWeather = json_decode($client->weatherSearch($data,$countryCode),true);
-        	$forecastWeather = json_decode($client->forecastSearch($data,$countryCode),true);
+        	$dailyWeather = json_decode($weatherClient->weatherSearch($data,$countryCode),true);
+        	$forecastWeather = json_decode($weatherClient->forecastSearch($data,$countryCode),true);
 
         	foreach ($forecastWeather['list'] as $list ) {
         		$day = gmdate('D', $list['dt']);
@@ -41,12 +39,12 @@ class WeatherResultsController extends Controller
         }
         return $this->render('weather_results/index.html.twig', [
             'weatherForm' => $form->createView(),
-            'weather' => $dailyWeather,
-            'weekdays' => $weekdays,
-            'geoip' => $session->get('geoip'),
             'file'=>$session->get('contents'),
             'countries'=>$session->get('keys'),
-            'news' => $news
+            'geoip' => $session->get('geoip'),
+            'news' => $session->get('news'),
+            'weather' => $dailyWeather,
+            'weekdays' => $weekdays
         ]);
     }
 }
