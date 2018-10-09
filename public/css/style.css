@@ -9,9 +9,11 @@
 .jumbotron-container {
 	margin-top:15px;
 }
+
 .form-inline input[type='submit'], .form-inline input[type='text']{
 	margin-left: 10px;
 }
+
 .form {
 	background-color: #ccc;
 	border-radius: 5px;
@@ -23,13 +25,19 @@
 	margin: 0 auto;
 }
 
+
 .card-img-top {
-	max-height: 350px;
+	height: 400px;
+	width: auto;
+	padding: 10px;
+	margin: auto;
 	overflow:hidden;
 }
+
 .lead {
 	margin-bottom: 10px;
 }
+
 .news-section {
 	margin-bottom: 10px;
 	color: #fff;
