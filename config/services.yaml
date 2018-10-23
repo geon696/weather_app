@@ -10,7 +10,6 @@ parameters:
     geoip.key: '0d33345c303748b28236b3d255ad6ab2'
     news.endpoint: 'https://newsapi.org/v2/top-headlines'
     news.key: 'aa47594b891141408dc5003a0cb3564c'
-    countries.code.endpoint: 'https://restcountries.eu/rest/v2/name/'
     
 
 
@@ -30,7 +29,6 @@ services:
             $geoipKey: '%geoip.key%'
             $newsEndpoint: '%news.endpoint%'
             $newsKey: '%news.key%'
-            $countriesCodeEndpoint: '%countries.code.endpoint%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

@@ -5,15 +5,6 @@
     {{ parent() }}
 {% endblock stylesheets %}
 
-{% block info %}
-	{#{% set date = geoip.time_zone.current_time | split(' ') %}
-	{% set date_day = date[0] | split('-') %}
-	{% set generalPlace = geoip.time_zone.name | split('/') %}
-	{% set place = generalPlace[1] %}
-	{{dump(place)}}#}
-    <span class="navbar-text"> News Section is Powered by News API</span> 
-{% endblock %}
-
 {% block body %}
 
      

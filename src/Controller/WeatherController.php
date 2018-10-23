@@ -31,7 +31,9 @@ class WeatherController extends Controller
         $session->set('news',$news);
 
         foreach ($finder as $file) {
-            $jsonContent = $file->getContents();
+            if($file->getfileName()=='countries.min.json'){     
+                $jsonContent = $file->getContents();
+            }
         }
         
         $contents = json_decode($jsonContent,true);

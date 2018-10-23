@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+	{{parent()}}
+{% endblock stylesheets %}
+{% block body %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+		    {{form_start(contactme,{'attr': {'class': 'form'}})}}
+			<div class="col-md-6" style="margin:0 auto;">
+		    	<legend>Conctact Form</legend>
+		    	<div class="form-row">
+		    		<div class="form-group col-md-6">
+			    		<label for="contact_form_firstname">
+			    			{{form_label(contactme.firstname)}}
+			    		</label>
+			    		{{form_widget(contactme.firstname)}}
+			    	</div>
+			    	<div class="form-group col-md-6">
+			    		<label for="contact_form_lastname">
+			    			{{form_label(contactme.lastname)}}
+			    		</label>
+			    		{{form_widget(contactme.lastname)}}
+			    	</div>
+		    	</div>
+				<div class="form-row">
+			    	<div class="form-group col-md-6">
+			    		<label for="contact_form_email">
+			    			{{form_label(contactme.email)}}
+			    		</label>
+			    		{{form_widget(contactme.email)}}
+			    	</div>
+			    	<div class="form-group col-md-6">
+			    		<label for="contact_form_theme">
+			    			{{form_label(contactme.theme)}}
+			    		</label>
+			    		{{form_widget(contactme.theme)}}
+			    	</div>
+			    </div>
+		    	<div class="form-group">
+		    		<label for="contact_form_message">
+		    			{{form_label(contactme.message)}}
+		    		</label>
+		    		{{form_widget(contactme.message)}}
+		    	</div>
+		    	<button type="submit" class="btn btn-primary">Send</button>
+		    </div>
+		    {{form_end(contactme)}}	
+		</div>
+	</div>
+</div>
+{% endblock %}

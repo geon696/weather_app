@@ -4,19 +4,22 @@ namespace App\Controller;
 
 use App\Form\WeatherType;
 use App\Service\weatherApi as WeatherClient;
-use App\Service\countriesCodes as countriesCodesClient;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Finder\Finder;
 
 class WeatherResultsController extends Controller
 {
     /**
      * @Route("/results", name="results")
      */
-    public function index(Request $request, WeatherClient $weatherClient,countriesCodesClient $countryCodeClient,  SessionInterface $session)
+    public function index(Request $request, WeatherClient $weatherClient,  SessionInterface $session)
     {
+        $finder = new Finder();
+        $finder->files()->in(__DIR__.'/../../public/json');
 		$dailyWeather = [];
 		$forecastWeather = [];
         $weekdays = ['Mon' => [], 'Tue' => [], 'Wed' => [], 'Thu' => [], 'Fri' => [], 'Sat' => [], 'Sun' => []];
@@ -25,10 +28,23 @@ class WeatherResultsController extends Controller
 
     	$form->handleRequest($request);
 
+        foreach ($finder as $file) {
+            if ($file->getfileName() == 'alpha2code.json') {
+                $contents = $file->getContents();
+            }
+        }
+
+        $contents = json_decode($contents,true);
+
+
         if($form->isSubmitted()){
         	$data = $form->getData();
-            $code = json_decode($countryCodeClient->getCountryCode($data['country']));
-            $countryCode = strtolower($code[0]->alpha2Code);
+            foreach ($contents as $country) {
+                if($data['country'] == $country['Name']){
+                    $countryCode = $country['Code'];
+                }
+            }
+            $countryCode = strtolower($countryCode);
         	$dailyWeather = json_decode($weatherClient->weatherSearch($data,$countryCode),true);
         	$forecastWeather = json_decode($weatherClient->forecastSearch($data,$countryCode),true);
 
