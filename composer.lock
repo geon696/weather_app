@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f4d1fc26fc67a4f3967ef792efbce8ac",
+    "content-hash": "1d4229febf849bdfeb6725f46e2b0450",
     "packages": [
         {
             "name": "deployer/deployer",
@@ -3894,16 +3894,16 @@
         },
         {
             "name": "symfony/intl",
-            "version": "v4.1.0",
+            "version": "v4.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/intl.git",
-                "reference": "e2a48225f7d525b23a6e34caaa7320205abcf179"
+                "reference": "793437f519a51bca4ac9b23bdaa479bb78535f6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/intl/zipball/e2a48225f7d525b23a6e34caaa7320205abcf179",
-                "reference": "e2a48225f7d525b23a6e34caaa7320205abcf179",
+                "url": "https://api.github.com/repos/symfony/intl/zipball/793437f519a51bca4ac9b23bdaa479bb78535f6c",
+                "reference": "793437f519a51bca4ac9b23bdaa479bb78535f6c",
                 "shasum": ""
             },
             "require": {
@@ -3965,7 +3965,7 @@
                 "l10n",
                 "localization"
             ],
-            "time": "2018-05-30T07:26:09+00:00"
+            "time": "2018-10-02T12:40:59+00:00"
         },
         {
             "name": "symfony/lts",
@@ -4624,54 +4624,6 @@
                 "validator"
             ],
             "time": "2018-05-16T14:33:22+00:00"
-        },
-        {
-            "name": "symfony/requirements-checker",
-            "version": "v1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/requirements-checker.git",
-                "reference": "a4c66b5f2633a022269b57a16478a4ea3bfd89ab"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/requirements-checker/zipball/a4c66b5f2633a022269b57a16478a4ea3bfd89ab",
-                "reference": "a4c66b5f2633a022269b57a16478a4ea3bfd89ab",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "bin": [
-                "bin/requirements-checker"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Requirements\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Check Symfony requirements and give recommendations",
-            "keywords": [
-                "configuration",
-                "distribution"
-            ],
-            "time": "2018-06-07T06:14:20+00:00"
         },
         {
             "name": "symfony/routing",

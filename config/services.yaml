@@ -10,6 +10,9 @@ parameters:
     geoip.key: '0d33345c303748b28236b3d255ad6ab2'
     news.endpoint: 'https://newsapi.org/v2/top-headlines'
     news.key: 'aa47594b891141408dc5003a0cb3564c'
+    betfair.longin.endpoint: 'https://identitysso.betfair.com/api/login'
+    betfair.next.endpoint: 'https://api.betfair.com/exchange/betting/rest'
+    betfair.key: 'WLsLIUabgRCGrxMf'
     
 
 
@@ -29,6 +32,9 @@ services:
             $geoipKey: '%geoip.key%'
             $newsEndpoint: '%news.endpoint%'
             $newsKey: '%news.key%'
+            $betfairLoginEndpoint: '%betfair.longin.endpoint%'
+            $betfairNextEndpoint: '%betfair.next.endpoint%'
+            $betfairKey: '%betfair.key%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Form\WeatherType;
 use App\Service\weatherApi as WeatherClient;
-
+use App\Service\BetfairApi as Betfair;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +16,7 @@ class WeatherResultsController extends Controller
     /**
      * @Route("/results", name="results")
      */
-    public function index(Request $request, WeatherClient $weatherClient,  SessionInterface $session)
+    public function index(Request $request, WeatherClient $weatherClient,  SessionInterface $session, Betfair $betfairClient)
     {
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/../../public/json');
@@ -44,10 +44,13 @@ class WeatherResultsController extends Controller
                     $countryCode = $country['Code'];
                 }
             }
+
+
             $countryCode = strtolower($countryCode);
         	$dailyWeather = json_decode($weatherClient->weatherSearch($data,$countryCode),true);
         	$forecastWeather = json_decode($weatherClient->forecastSearch($data,$countryCode),true);
-
+            // $betfairResponse = $betfairClient->login('betpractice','Bpc@6712013');
+            // $betfairResponse = $betfairClient->getAllTypes('WLsLIUabgRCGrxMf','3nPcCpmA+aw1uzxpGi8TXxBRj6T7vamxO/aMjBlZerc=');
         	foreach ($forecastWeather['list'] as $list ) {
         		$day = gmdate('D', $list['dt']);
                 $weekdays[$day][]=$list;
